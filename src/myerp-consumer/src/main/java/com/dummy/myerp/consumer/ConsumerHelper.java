@@ -2,7 +2,6 @@ package com.dummy.myerp.consumer;
 
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
-
 /**
  * Classe d'aide pour les classes du module consumer
  */
