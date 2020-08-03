@@ -17,12 +17,12 @@ public class EcritureComptableTest {
 
 	private LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {
 
-		BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
+		BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit).setScale(2);
 
-		BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
+		BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit).setScale(2);
 
-		String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
-				.subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
+		String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO.setScale(2))
+				.subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO).setScale(2)).toPlainString();
 
 		LigneEcritureComptable vRetour = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
 				vLibelle, vDebit, vCredit);
@@ -63,7 +63,7 @@ public class EcritureComptableTest {
 		vEcriture.getListLigneEcriture().add(this.createLigne(1, "10", null));
 		vEcriture.getListLigneEcriture().add(this.createLigne(1, "20", "1"));
 		vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "30"));
-		vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "2"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "6"));
 		assertFalse(vEcriture.isEquilibree());
 	}
 
@@ -71,7 +71,7 @@ public class EcritureComptableTest {
 	@DisplayName("test: total credit d'une ecriture comptable")
 	public void getTotalCredit_shouldReturnTheSumOfCreditLines_OfPositivesBigDecimal() {
 
-		BigDecimal totalCreditExpected = new BigDecimal(341);
+		BigDecimal totalCreditExpected = new BigDecimal("341").setScale(2);
 
 		BigDecimal totalCreditActual = vEcriture.getTotalCredit();
 
@@ -83,7 +83,7 @@ public class EcritureComptableTest {
 	@DisplayName("test: total debit d'une ecriture comptable")
 	public void getTotalDebit_shouldReturnTheSumOfDebitLines_OfPositivesBigDecimal() {
 
-		BigDecimal totalDebitExpected = new BigDecimal(341);
+		BigDecimal totalDebitExpected = new BigDecimal("341");
 
 		BigDecimal totalDebitActual = vEcriture.getTotalDebit();
 

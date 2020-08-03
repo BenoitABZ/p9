@@ -2,7 +2,7 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 import static org.assertj.core.api.Assertions.*;
 
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,11 +29,13 @@ class CompteComptableTest {
 	@DisplayName("test: getByNumero")
 	public void getByNumero_shouldReturnCompteComptable_OfInteger() {
 
-		List<CompteComptable> listCompteComptable = Arrays.asList(compteComptableExpected);
+		List<CompteComptable> listCompteComptable = new ArrayList<>();
+		
+		listCompteComptable.add(compteComptableExpected);
 
-		CompteComptable compteComptable1Actual = CompteComptable.getByNumero(listCompteComptable, 0);
+		CompteComptable compteComptable1Actual = CompteComptable.getByNumero(listCompteComptable, numero);
 
-		assertThat(compteComptable1Actual).isEqualTo(compteComptableExpected);
+		assertThat(compteComptable1Actual.getNumero()).isEqualTo(compteComptableExpected.getNumero());
 
 	}
 

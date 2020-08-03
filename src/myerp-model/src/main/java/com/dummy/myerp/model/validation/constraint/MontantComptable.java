@@ -25,7 +25,6 @@ import javax.validation.constraints.Digits;
  *  </ul>
  */
 @Digits(integer = 13, fraction = 2)
-@DecimalMin(value = "0.00", inclusive = false)
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
