@@ -297,12 +297,19 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
 	@Override
 	public void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable) {
+		
+		int derniereValeur = 0;
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+		
+		Integer vId = this.queryGetSequenceValuePostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
+				Integer.class);
+		
 
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
-		vSqlParams.addValue("derniere_valeur", pSequenceEcritureComptable.getDerniereValeur());
+		vSqlParams.addValue("derniere_valeur", derniereValeur);
+		vSqlParams.addValue("journal_code", pSequenceEcritureComptable.getJournalComptable().getCode());
 		vJdbcTemplate.update(SQLinsertSequenceEcritureComptable, vSqlParams);
 	}
 	
@@ -316,13 +323,13 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		}
 
 		@Override
-		public SequenceEcritureComptable getSequenceEcritureComptable(int annee, int derniereValeur)
+		public SequenceEcritureComptable getSequenceEcritureComptable(int annee, JournalComptable pJournalComptable)
 				throws NotFoundException {
 			NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 			MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 			SequenceEcritureComptableRm vRm = new SequenceEcritureComptableRm();
 			vSqlParams.addValue("annee", annee);
-			vSqlParams.addValue("derniere_valeur", derniereValeur);
+			vSqlParams.addValue("journal_code", pJournalComptable.getCode());
 
 			SequenceEcritureComptable sequenceEcritureComptable;
 			try {
@@ -330,8 +337,33 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 						vRm);
 				return sequenceEcritureComptable;
 			} catch (EmptyResultDataAccessException vEx) {
-				throw new NotFoundException("Sequence comptable non trouvée année=" + annee + "derniereValeur =" + derniereValeur);
+				throw new NotFoundException("Sequence comptable non trouvée année=" + annee + "journalCode =" + pJournalComptable.getCode());
 			}
+		}
+		
+		// ==================== SequenceEcritureComptable - UPDATE ====================
+
+		/** SQLupdateEcritureComptable */
+		private static String SQLupdateSequenceEcritureComptable;
+
+		public void setSQLupdateSequenceEcritureComptable(String pSQLupdateSequenceEcritureComptable) {
+			SQLupdateSequenceEcritureComptable = pSQLupdateSequenceEcritureComptable;
+		}
+
+		@Override
+		public void updateSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable) {
+						
+					
+			int derniereValeur = pSequenceEcritureComptable.getDerniereValeur() + 1;
+			
+			NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+			MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+			vSqlParams.addValue("derniere_valeur", derniereValeur);
+			vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
+			vSqlParams.addValue("journal_code", pSequenceEcritureComptable.getJournalComptable().getCode());
+
+			vJdbcTemplate.update(SQLupdateSequenceEcritureComptable, vSqlParams);
+
 		}
 
 }

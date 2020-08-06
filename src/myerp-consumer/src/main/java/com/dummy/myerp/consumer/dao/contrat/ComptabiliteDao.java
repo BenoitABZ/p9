@@ -84,7 +84,8 @@ public interface ComptabiliteDao {
 
 	void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
 
+	SequenceEcritureComptable getSequenceEcritureComptable(int annee, JournalComptable pJournalComptable) throws NotFoundException;
 
-	SequenceEcritureComptable getSequenceEcritureComptable(int annee, int derniereValeur) throws NotFoundException;
+	void updateSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
 
 }

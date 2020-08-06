@@ -51,7 +51,7 @@ public class ComptabiliteDaoImplIT {
 	        	       
 	    Date date = valueOf(localDate);
 		
-		ecritureComptable.setId(-1000);
+		ecritureComptable.setId(null);
 
 		ecritureComptable.setJournal(new JournalComptable("BQ", "Banque"));
 
@@ -102,7 +102,7 @@ public class ComptabiliteDaoImplIT {
 	}
 
 	@Test
-	@Tag("getUneEcritureComptable")
+	@Tag("get")
 	@DisplayName("test: récupération d'une ecriture comptable par son id")
 	public void getEcritureComptable_shouldReturnUneEcritureComptable_OfInteger() throws NotFoundException {
 
@@ -137,7 +137,7 @@ public class ComptabiliteDaoImplIT {
 	}
 	
 	@Test
-	@Tag("getUneEcritureComptable")
+	@Tag("get")
 	@DisplayName("test: récupération d'une ecriture comptable par sa reference")
 	public void getEcritureComptableByRef_shouldReturnUneEcritureComptable_OfString() throws NotFoundException {
 
@@ -168,7 +168,35 @@ public class ComptabiliteDaoImplIT {
 		assertThat(isEcEquals).isTrue();
 
 	}
-	
+		
+	@Test
+	@Tag("get")
+	@DisplayName("test: récupération d'une séquence d'ecriture comptable")
+	public void getSequenceEcritureComptable_shouldReturnUneSequenceEcritureComptable_OfInteger() throws NotFoundException {
+
+		int annee = 2016;
+		
+		StringBuffer seqExpected = new StringBuffer();
+
+	    seqExpected.append("VE")
+                   .append("2016")
+                   .append("41");	        
+		
+		StringBuffer seqActual = new StringBuffer();
+		
+		SequenceEcritureComptable seq = comptabiliteDao.getSequenceEcritureComptable(annee, new JournalComptable("VE","Vente"));
+		
+		seqActual.append(seq.getJournalComptable().getCode())
+                 .append(seq.getAnnee())
+                 .append(seq.getDerniereValeur());
+
+		
+		boolean isSeqEquals = StringUtils.equals(seqExpected, seqActual);
+
+		assertThat(isSeqEquals).isTrue();
+
+	}
+		
 	@Test
 	@DisplayName("test: récupération de la liste des lignes par ecriture comptable ")
 	public void loadListLigneEcriture_shouldReturnListLigneEcritureInDb_OfEcritureComptable() {
@@ -206,22 +234,37 @@ public class ComptabiliteDaoImplIT {
 		
 		int annee = 2016;
 		
-		int derniereValeur = 51;
+		int derniereValeur = 90;
 		
-		SequenceEcritureComptable seq = new SequenceEcritureComptable(annee, derniereValeur);
+		SequenceEcritureComptable sequenceEcritureComptableBeforeInsertion = new SequenceEcritureComptable(annee, derniereValeur, new JournalComptable("BQ","Banque"));
 		
-		comptabiliteDao.insertSequenceEcritureComptable(seq);
+		comptabiliteDao.insertSequenceEcritureComptable(sequenceEcritureComptableBeforeInsertion);
 		
-		EcritureComptable ecritureComptableAferInsertion = comptabiliteDao.getEcritureComptableByRef("BQ-2020/00001");
+		EcritureComptable sequenceEcritureComptableAferInsertion = comptabiliteDao.getEcritureComptableByRef("BQ-2020/00001");
 				
-		assertThat(ecritureComptableAferInsertion.toString()).isEqualTo(ecritureComptable.toString());
+		assertThat(sequenceEcritureComptableAferInsertion.toString()).isEqualTo(sequenceEcritureComptableBeforeInsertion .toString());
+
+	}
+		
+	@Test
+	@Tag("update")
+	@DisplayName("test: maj d'une sequence d'ecriture comptable ")
+	public void updateSequenceEcritureComptable_shouldUpdateSequenceEcritureComptableInDb_OfSequenceEcritureComptable() throws NotFoundException {
+		
+        int annee = 2016;
+		
+		SequenceEcritureComptable sequenceEcritureComptableBeforeUpdate = comptabiliteDao.getSequenceEcritureComptable(annee, new JournalComptable("AC","Achat"));
+
+		comptabiliteDao.updateSequenceEcritureComptable(sequenceEcritureComptableBeforeUpdate);
+		
+		SequenceEcritureComptable sequenceEcritureComptableAfterUpdate = comptabiliteDao.getSequenceEcritureComptable(annee, new JournalComptable("AC","Achat"));
+					
+		assertThat(sequenceEcritureComptableAfterUpdate.getDerniereValeur()).isEqualTo(sequenceEcritureComptableBeforeUpdate.getDerniereValeur() -1);
 
 	}
 	
-	
-	
-	
 	@Test
+	@Tag("update")
 	@DisplayName("test: maj d'une ecriture comptable ")
 	public void updateEcritureComptable_shouldUpdateEcritureComptableInDb_OfEcritureComptable() throws NotFoundException {
 		
@@ -234,7 +277,7 @@ public class ComptabiliteDaoImplIT {
 		assertThat(ecritureComptableAfterUpdate.toString()).isEqualTo(ecritureComptable.toString());
 
 	}
-	
+
 	@Test
 	@Tag("delete")
 	@DisplayName("test: suppression d'une ecriture comptable ")
@@ -283,9 +326,24 @@ public class ComptabiliteDaoImplIT {
 		
 		String reference = "TT-2028/00001";
 			
-		NotFoundException nfe = assertThrows(NotFoundException.class, () -> comptabiliteDao.getEcritureComptableByRef(reference), "id non existant");
+		NotFoundException nfe = assertThrows(NotFoundException.class, () -> comptabiliteDao.getEcritureComptableByRef(reference), "reference non existante");
 	    
 		assertEquals("EcritureComptable non trouvée : reference=" + reference, nfe.getMessage());
+	
+	}
+	
+	@Test
+	@Tag("error")
+	@DisplayName("test: exception notFoundException pour mauvais arguments ")
+	public void getSequenceEcritureComptable_shouldReturnNotFoundException__OfInteger() {
+		
+		int annee = 2100;
+		
+		JournalComptable jc = new JournalComptable("AC","Achat");
+			
+		NotFoundException nfe = assertThrows(NotFoundException.class, () -> comptabiliteDao.getSequenceEcritureComptable(annee, jc), "annee impossible");
+	    
+		assertEquals("Sequence comptable non trouvée année=" + annee + "journalCode=" + jc.getCode(), nfe.getMessage());
 	
 	}
 	
