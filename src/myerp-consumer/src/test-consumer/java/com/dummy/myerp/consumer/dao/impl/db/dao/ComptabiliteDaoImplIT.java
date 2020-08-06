@@ -15,6 +15,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 import org.springframework.test.context.junit.jupiter.*;
@@ -197,6 +198,27 @@ public class ComptabiliteDaoImplIT {
 		assertThat(ecritureComptableAferInsertion.toString()).isEqualTo(ecritureComptable.toString());
 
 	}
+	
+	@Test
+	@Tag("insertion")
+	@DisplayName("test: insertion d'une sequence d'ecriture comptable ")
+	public void insertSequenceEcritureComptable_shouldInsertSequenceEcritureComptableInDb_OfSequenceEcritureComptable() throws NotFoundException {
+		
+		int annee = 2016;
+		
+		int derniereValeur = 51;
+		
+		SequenceEcritureComptable seq = new SequenceEcritureComptable(annee, derniereValeur);
+		
+		comptabiliteDao.insertSequenceEcritureComptable(seq);
+		
+		EcritureComptable ecritureComptableAferInsertion = comptabiliteDao.getEcritureComptableByRef("BQ-2020/00001");
+				
+		assertThat(ecritureComptableAferInsertion.toString()).isEqualTo(ecritureComptable.toString());
+
+	}
+	
+	
 	
 	
 	@Test

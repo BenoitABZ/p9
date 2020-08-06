@@ -88,7 +88,20 @@
                 DELETE FROM myerp.ligne_ecriture_comptable
                 WHERE ecriture_id = :ecriture_id
             </value>
+        </property>       
+         </property>
+           <property name="SQLinsertSequenceEcritureComptable">
+            <value>
+               INSERT INTO myerp.sequence_ecriture_comptable (annee, derniere_valeur) 
+               VALUES (:annee, :derniere_valeur)
+            </value>
         </property>
+        <property name="SQLgetSequenceEcritureComptable">
+            <value>
+                SELECT * from myerp.sequence_ecriture_comptable 
+                WHERE annee = :annee, derniere_valeur = :derniereValeur 
+            </value>
+        </property>
+             
     </bean>
-
 </beans>
