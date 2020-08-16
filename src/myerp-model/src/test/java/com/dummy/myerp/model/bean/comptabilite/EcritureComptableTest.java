@@ -17,12 +17,12 @@ public class EcritureComptableTest {
 
 	private LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {
 
-		BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit).setScale(2);
+		BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
 
-		BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit).setScale(2);
+		BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
 
-		String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO.setScale(2))
-				.subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO).setScale(2)).toPlainString();
+		String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
+				.subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
 
 		LigneEcritureComptable vRetour = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
 				vLibelle, vDebit, vCredit);
@@ -71,7 +71,7 @@ public class EcritureComptableTest {
 	@DisplayName("test: total credit d'une ecriture comptable")
 	public void getTotalCredit_shouldReturnTheSumOfCreditLines_OfPositivesBigDecimal() {
 
-		BigDecimal totalCreditExpected = new BigDecimal("341").setScale(2);
+		BigDecimal totalCreditExpected = new BigDecimal("341.00");
 
 		BigDecimal totalCreditActual = vEcriture.getTotalCredit();
 
@@ -83,7 +83,7 @@ public class EcritureComptableTest {
 	@DisplayName("test: total debit d'une ecriture comptable")
 	public void getTotalDebit_shouldReturnTheSumOfDebitLines_OfPositivesBigDecimal() {
 
-		BigDecimal totalDebitExpected = new BigDecimal("341");
+		BigDecimal totalDebitExpected = new BigDecimal("341.00");
 
 		BigDecimal totalDebitActual = vEcriture.getTotalDebit();
 
@@ -96,9 +96,9 @@ public class EcritureComptableTest {
 
 
 		assertThat(vEcriture.toString()).isEqualTo(
-				"EcritureComptable{id=-1, journal=JournalComptable{code='TE', libelle='Journal comptable test'}, reference='TE-2020/00001', date=" + " " + vEcriture.getDate().toString() + ", libelle='Libellé', totalDebit=301, totalCredit=301, listLigneEcriture=[\n"
+				"EcritureComptable{id=-1, journal=JournalComptable{code='TE', libelle='Journal comptable test'}, reference='TE-2020/00001', date=" + vEcriture.getDate().toString() + ", libelle='Equilibrée', totalDebit=341.00, totalCredit=341.00, listLigneEcriture=[\n"
 						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='200.50', debit=200.50, credit=null}\n"
-						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='77.50', debit=100.50, credit=33}\n"
+						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='67.50', debit=100.50, credit=33}\n"
 						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='-301', debit=null, credit=301}\n"
 						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='33', debit=40, credit=7}\n"
 						+ "]}"

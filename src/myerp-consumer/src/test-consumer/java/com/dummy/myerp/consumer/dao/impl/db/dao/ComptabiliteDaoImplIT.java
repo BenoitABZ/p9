@@ -1,6 +1,7 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -22,7 +23,6 @@ import org.springframework.test.context.junit.jupiter.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import static java.sql.Date.valueOf;
 import java.util.List;
@@ -51,7 +51,7 @@ public class ComptabiliteDaoImplIT {
 	        	       
 	    Date date = valueOf(localDate);
 		
-		ecritureComptable.setId(null);
+		ecritureComptable.setId(-3);
 
 		ecritureComptable.setJournal(new JournalComptable("BQ", "Banque"));
 
@@ -232,17 +232,17 @@ public class ComptabiliteDaoImplIT {
 	@DisplayName("test: insertion d'une sequence d'ecriture comptable ")
 	public void insertSequenceEcritureComptable_shouldInsertSequenceEcritureComptableInDb_OfSequenceEcritureComptable() throws NotFoundException {
 		
-		int annee = 2016;
+		int annee = 2017;
 		
-		int derniereValeur = 90;
+		int derniereValeur = 1;
 		
 		SequenceEcritureComptable sequenceEcritureComptableBeforeInsertion = new SequenceEcritureComptable(annee, derniereValeur, new JournalComptable("BQ","Banque"));
 		
 		comptabiliteDao.insertSequenceEcritureComptable(sequenceEcritureComptableBeforeInsertion);
 		
-		EcritureComptable sequenceEcritureComptableAferInsertion = comptabiliteDao.getEcritureComptableByRef("BQ-2020/00001");
+		SequenceEcritureComptable sequenceEcritureComptableAferInsertion = comptabiliteDao.getSequenceEcritureComptable(annee, new JournalComptable("BQ","Banque"));
 				
-		assertThat(sequenceEcritureComptableAferInsertion.toString()).isEqualTo(sequenceEcritureComptableBeforeInsertion .toString());
+		assertThat(sequenceEcritureComptableAferInsertion.toString()).isEqualTo(sequenceEcritureComptableBeforeInsertion.toString());
 
 	}
 		
@@ -259,7 +259,7 @@ public class ComptabiliteDaoImplIT {
 		
 		SequenceEcritureComptable sequenceEcritureComptableAfterUpdate = comptabiliteDao.getSequenceEcritureComptable(annee, new JournalComptable("AC","Achat"));
 					
-		assertThat(sequenceEcritureComptableAfterUpdate.getDerniereValeur()).isEqualTo(sequenceEcritureComptableBeforeUpdate.getDerniereValeur() -1);
+		assertThat(sequenceEcritureComptableAfterUpdate.getDerniereValeur() -1).isEqualTo(sequenceEcritureComptableBeforeUpdate.getDerniereValeur());
 
 	}
 	

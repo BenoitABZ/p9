@@ -39,6 +39,7 @@ public class EcritureComptable {
     /** La liste des lignes d'écriture comptable. */
     @Valid
     @Size(min = 2)
+    
     private final List<LigneEcritureComptable> listLigneEcriture = new ArrayList<>();
 
 
@@ -90,7 +91,7 @@ public class EcritureComptable {
                 vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
             }
         }
-        return vRetour;
+        return vRetour.setScale(2);
     }
 
     /**
@@ -105,7 +106,7 @@ public class EcritureComptable {
                 vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
             }
         }
-        return vRetour;
+        return vRetour.setScale(2);
     }
 
     /**

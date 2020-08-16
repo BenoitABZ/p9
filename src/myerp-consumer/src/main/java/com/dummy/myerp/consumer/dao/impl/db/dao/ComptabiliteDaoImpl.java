@@ -298,14 +298,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 	@Override
 	public void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable) {
 		
-		int derniereValeur = 0;
+		int derniereValeur = 1;
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		
-		Integer vId = this.queryGetSequenceValuePostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
-				Integer.class);
-		
-
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
 		vSqlParams.addValue("derniere_valeur", derniereValeur);
@@ -337,7 +333,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 						vRm);
 				return sequenceEcritureComptable;
 			} catch (EmptyResultDataAccessException vEx) {
-				throw new NotFoundException("Sequence comptable non trouvée année=" + annee + "journalCode =" + pJournalComptable.getCode());
+				throw new NotFoundException("Sequence comptable non trouvée année=" + annee + "journalCode=" + pJournalComptable.getCode());
 			}
 		}
 		

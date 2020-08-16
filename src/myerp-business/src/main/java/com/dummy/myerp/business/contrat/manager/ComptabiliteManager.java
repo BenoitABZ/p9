@@ -58,7 +58,15 @@ public interface ComptabiliteManager {
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException;
+    void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException;
+    
+    /**
+     * Vérifie que l'Ecriture comptable respecte les règles de gestion.
+     *
+     * @param pEcritureComptable -
+     * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
+     */
+    void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException;
 
     /**
      * Insert une nouvelle écriture comptable.

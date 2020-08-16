@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.contrat;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
+import com.dummy.myerp.business.impl.BusinessProxyImpl;
 
 
 /**
@@ -16,4 +17,5 @@ public interface BusinessProxy {
      * @return ComptabiliteManager
      */
     ComptabiliteManager getComptabiliteManager();
+    
 }
