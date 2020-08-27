@@ -28,11 +28,11 @@ class JournalComptableTest {
 
 	@Test
 	@DisplayName("test: getByCode")
-	public void getByCode_shouldReturnJournalComptable_ofInteger() throws NotFoundException{
+	public void getByCode_shouldReturnJournalComptable_ofInteger() throws NotFoundException {
 
 		List<JournalComptable> journalComptableList = Arrays.asList(journalComptableExpected);
 
-		JournalComptable journalComptableActual = JournalComptable.getByCode(journalComptableList, code);
+		JournalComptable journalComptableActual = journalComptableExpected.getByCode(journalComptableList, code);
 
 		assertThat(journalComptableActual).isEqualTo(journalComptableExpected);
 
@@ -41,7 +41,8 @@ class JournalComptableTest {
 	@Test
 	public void toString_shouldReturnSummaryString() {
 
-		assertThat(journalComptableExpected.toString()).isEqualTo("JournalComptable{code='BQ', libelle='journal de banque'}");
+		assertThat(journalComptableExpected.toString())
+				.isEqualTo("JournalComptable{code='BQ', libelle='journal de banque'}");
 
 	}
 

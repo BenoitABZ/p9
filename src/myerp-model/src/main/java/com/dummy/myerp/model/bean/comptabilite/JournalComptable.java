@@ -76,14 +76,20 @@ public class JournalComptable {
 	 * @param pList la liste où chercher le {@link JournalComptable}
 	 * @param pCode le code du {@link JournalComptable} à chercher
 	 * @return {@link JournalComptable} ou {@code null}
+	 * @throws NotFoundException
 	 */
-	public static JournalComptable getByCode(List<? extends JournalComptable> pList, String pCode) {
+	public static JournalComptable getByCode(List<? extends JournalComptable> pList, String pCode) throws NotFoundException {
 		JournalComptable vRetour = null;
 		for (JournalComptable vBean : pList) {
 			if (vBean != null && Objects.equals(vBean.getCode(), pCode)) {
 				vRetour = vBean;
 				break;
 			}
+		}
+
+		if (vRetour == null) {
+
+			throw new NotFoundException("le journal comptable ayant pour code=" + pCode + " n'existe pas en BDD");
 		}
 
 		return vRetour;

@@ -77,7 +77,7 @@ public class SequenceEcritureComptable {
 	public String toString() {
 		final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
 		final String vSEP = ", ";
-		vStB.append("{").append("annee=").append(annee).append(vSEP).append("derniereValeur=").append(derniereValeur).append("journalCode=").append(journalComptable.getCode())
+		vStB.append("{").append("annee=").append(annee).append(vSEP).append("derniereValeur=").append(derniereValeur).append(vSEP).append("journalCode=").append(journalComptable.getCode())
 				.append("}");
 		return vStB.toString();
 	}

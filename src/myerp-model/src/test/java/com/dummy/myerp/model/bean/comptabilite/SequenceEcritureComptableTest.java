@@ -15,7 +15,7 @@ class SequenceEcritureComptableTest {
 		sequenceEcritureComptable.setJournalComptable(new JournalComptable("BQ", "Banque"));
 
 		assertThat(sequenceEcritureComptable.toString())
-				.isEqualTo("SequenceEcritureComptable{annee=2020, journalCode=BQ, derniereValeur=90}");
+		.isEqualTo("SequenceEcritureComptable{annee=2020, derniereValeur=90, journalCode=BQ}");
 
 	}
 

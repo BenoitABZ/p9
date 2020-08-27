@@ -15,11 +15,19 @@ public class JournalComptableDaoCache {
 	/** The List compte comptable. */
 	private List<JournalComptable> listJournalComptable;
 
+	//private JournalComptable journalComptable;
+
 	// ==================== Constructeurs ====================
 	/**
 	 * Instantiates a new Compte comptable dao cache.
 	 */
+//	public JournalComptableDaoCache(JournalComptable journalComptable) {
+
+//		this.journalComptable = journalComptable;
+//	}
+
 	public JournalComptableDaoCache() {
+
 	}
 
 	// ==================== Méthodes ====================
@@ -45,4 +53,5 @@ public class JournalComptableDaoCache {
 
 		return vRetour;
 	}
+
 }

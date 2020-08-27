@@ -2,22 +2,28 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
+import com.dummy.myerp.technical.exception.TechnicalException;
 
 import org.springframework.test.context.junit.jupiter.*;
 
@@ -35,15 +41,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Rollback(true)
 
-public class ComptabiliteDaoImplIT {
+public class ComptabiliteDaoImplIT{
 
-	@Autowired
-	private ComptabiliteDaoImpl comptabiliteDao;
+@Autowired
+ComptabiliteDaoImpl comptabiliteDao; 
 
 	private EcritureComptable ecritureComptable;
+	
+    //private ComptabiliteDaoImpl comptabiliteDao; 
+
+
 
 	@BeforeEach
 	public void initEcritureComptable() {
+		
+		  //ApplicationContext context = new ClassPathXmlApplicationContext("/bootstrapContext.xml");
+		
+	        //comptabiliteDao = (ComptabiliteDaoImpl) context.getBean("ComptabiliteDaoImpl");
+	        
+	        //xscd System.out.println(comptabiliteDao.getString());
 
 		ecritureComptable = new EcritureComptable();
 				
@@ -78,7 +94,7 @@ public class ComptabiliteDaoImplIT {
 		assertThat(compteComptables).isNotNull();
 
 	}
-
+	
 	@Test
 	@Tag("getList")
 	@DisplayName("test: récupération de la liste des journaux comptable")
@@ -120,7 +136,10 @@ public class ComptabiliteDaoImplIT {
 				
 		StringBuffer ecActual = new StringBuffer();
 		
+		
 		EcritureComptable ec = comptabiliteDao.getEcritureComptable(-4);
+
+	
 		
 		ecActual.append(ec.getId())
                 .append(ec.getJournal().getCode())
@@ -217,7 +236,7 @@ public class ComptabiliteDaoImplIT {
 	@Test
 	@Tag("insertion")
 	@DisplayName("test: insertion d'une ecriture comptable ")
-	public void insertEcritureComptable_shouldInsertEcritureComptableInDb_OfEcritureComptable() throws NotFoundException {
+	public void insertEcritureComptable_shouldInsertEcritureComptableInDb_OfEcritureComptable() throws NotFoundException, TechnicalException {
 		
 		comptabiliteDao.insertEcritureComptable(ecritureComptable);
 		
@@ -266,7 +285,7 @@ public class ComptabiliteDaoImplIT {
 	@Test
 	@Tag("update")
 	@DisplayName("test: maj d'une ecriture comptable ")
-	public void updateEcritureComptable_shouldUpdateEcritureComptableInDb_OfEcritureComptable() throws NotFoundException {
+	public void updateEcritureComptable_shouldUpdateEcritureComptableInDb_OfEcritureComptable() throws NotFoundException, TechnicalException  {
 		
 		ecritureComptable.setId(-4);
 		
@@ -281,7 +300,7 @@ public class ComptabiliteDaoImplIT {
 	@Test
 	@Tag("delete")
 	@DisplayName("test: suppression d'une ecriture comptable ")
-	public void deleteEcritureComptable_shouldDeleteEcritureComptableInDb_OfInteger() throws NotFoundException {
+	public void deleteEcritureComptable_shouldDeleteEcritureComptableInDb_OfInteger() throws NotFoundException, TechnicalException  {
 		
 		List<EcritureComptable> ListEcritureComptableBeforeDelete = comptabiliteDao.getListEcritureComptable();		
 		

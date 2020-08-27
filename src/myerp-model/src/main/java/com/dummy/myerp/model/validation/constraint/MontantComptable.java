@@ -24,7 +24,7 @@ import javax.validation.constraints.Digits;
  *      <li>{@link java.math.BigDecimal}</li>
  *  </ul>
  */
-@Digits(integer = 13, fraction = 2)
+@Digits(integer = 13, fraction = 2, message ="un montant comptable doit etre composé de 13 chiffres + 2 chiffres max apres la virgule")
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
@@ -32,7 +32,7 @@ import javax.validation.constraints.Digits;
 public @interface MontantComptable {
 
     /** Message de la violation */
-    String message() default "Taux de TVA invalide";
+    String message() default "un montant comptable doit etre composé de 13 chiffres + 2 chiffres max apres la virgule";
 
     /** Groupe de validation */
     Class<?>[] groups() default {};

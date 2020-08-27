@@ -25,16 +25,28 @@ public class EcritureComptableRM implements RowMapper<EcritureComptable> {
         vBean.setId(pRS.getInt("id"));
         try {
 			vBean.setJournal(journalComptableDaoCache.getByCode(pRS.getString("journal_code")));
-		} catch (NotFoundException e) {
+			
+    }catch(NullPointerException npe) {
+        	
+        	System.out.println("ici");
+        	
+        
+        	
+        	
+        } catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
         vBean.setReference(pRS.getString("reference"));
         vBean.setDate(pRS.getDate("date"));
         vBean.setLibelle(pRS.getString("libelle"));
 
         // Chargement des lignes d'écriture
         ConsumerHelper.getDaoProxy().getComptabiliteDao().loadListLigneEcriture(vBean);
+    
+        
+        
 
         return vBean;
     }

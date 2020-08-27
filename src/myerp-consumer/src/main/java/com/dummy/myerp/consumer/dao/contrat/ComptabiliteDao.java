@@ -7,6 +7,7 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
+import com.dummy.myerp.technical.exception.TechnicalException;
 
 
 /**
@@ -65,22 +66,25 @@ public interface ComptabiliteDao {
      * Insert une nouvelle écriture comptable.
      *
      * @param pEcritureComptable -
+     * @throws TechnicalException 
      */
-    void insertEcritureComptable(EcritureComptable pEcritureComptable);
+    void insertEcritureComptable(EcritureComptable pEcritureComptable) throws TechnicalException;
 
     /**
      * Met à jour l'écriture comptable.
      *
      * @param pEcritureComptable -
+     * @throws TechnicalException 
      */
-    void updateEcritureComptable(EcritureComptable pEcritureComptable);
+    void updateEcritureComptable(EcritureComptable pEcritureComptable) throws TechnicalException;
 
     /**
      * Supprime l'écriture comptable d'id {@code pId}.
      *
      * @param pId l'id de l'écriture
+     * @throws TechnicalException 
      */
-    void deleteEcritureComptable(Integer pId);
+    void deleteEcritureComptable(Integer pId) throws TechnicalException;
 
 	void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
 
