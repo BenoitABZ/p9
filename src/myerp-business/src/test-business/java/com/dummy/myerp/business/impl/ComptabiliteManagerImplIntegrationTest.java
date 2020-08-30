@@ -2,7 +2,6 @@ package com.dummy.myerp.business.impl;
 
 import static java.sql.Date.valueOf;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -56,7 +55,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 @ContextConfiguration(value = "/com/dummy/myerp/business/bootstrapContext.xml")
 //@Transactional
 //@Rollback(true)
-public class ComptabiliteManagerImplIT {
+public class ComptabiliteManagerImplIntegrationTest {
 
 	@Autowired
 	BusinessProxyImpl businessProxy;
@@ -66,7 +65,7 @@ public class ComptabiliteManagerImplIT {
 
 	@MockBean
 	ComptabiliteDao comptabiliteDao;
-	
+
 	@SpyBean
 	TransactionManager transactionManager;
 
@@ -74,10 +73,9 @@ public class ComptabiliteManagerImplIT {
 
 	EcritureComptable vEcritureComptable;
 
-
 	@BeforeEach
 	public void initEcritureComptable() {
-		
+
 		vComptabiliteManager = businessProxy.getComptabiliteManager();
 
 		vEcritureComptable = new EcritureComptable();
@@ -172,27 +170,25 @@ public class ComptabiliteManagerImplIT {
 
 		verify(comptabiliteDao, times(1)).deleteEcritureComptable(any(Integer.class));
 
-
 	}
-	
-	
+
 	@Test
-	public void deleteEcritureComptable_shouldRollBackWhenRuntimeExceptionIsThrown_ofEcritureComptable() throws Exception {		
+	public void deleteEcritureComptable_shouldRollBackWhenRuntimeExceptionIsThrown_ofEcritureComptable()
+			throws Exception {
 		int id = -3;
-		
+
 		when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-		//when(transactionManager.commitMyERP(any(TransactionStatus.class))
-				//.thenThrow(Exception.class);		
-		doNothing().when(comptabiliteDao).deleteEcritureComptable(any(Integer.class));		
-		doThrow(new TransactionUsageException("probleme")).when(transactionManager).commitMyERP(any(TransactionStatus.class));
-		
+
+		doNothing().when(comptabiliteDao).deleteEcritureComptable(any(Integer.class));
+		doThrow(new TransactionUsageException("probleme")).when(transactionManager)
+				.commitMyERP(any(TransactionStatus.class));
+
 		try {
-		
-		vComptabiliteManager.deleteEcritureComptable(id);
-		
-}catch ( TransactionUsageException te){
-			
-			
+
+			vComptabiliteManager.deleteEcritureComptable(id);
+
+		} catch (TransactionUsageException te) {
+
 		}
 
 		verify(transactionManager, times(1)).rollbackMyERP(any(TransactionStatus.class));
@@ -200,28 +196,25 @@ public class ComptabiliteManagerImplIT {
 	}
 
 	@Test
-	public void deleteEcritureComptable_shouldRollBackWhenTechnicalExceptionIsThrown_ofEcritureComptable() throws Exception {
+	public void deleteEcritureComptable_shouldRollBackWhenTechnicalExceptionIsThrown_ofEcritureComptable()
+			throws Exception {
 		int id = -3;
-		
+
 		when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-		//when(transactionManager.commitMyERP(any(TransactionStatus.class))
-				//.thenThrow(Exception.class);		
-		//doNothing().when(transactionManager).commitMyERP(any(TransactionStatus.class));
+
+		// doNothing().when(transactionManager).commitMyERP(any(TransactionStatus.class));
 		try {
-		doThrow(TechnicalException.class).when(comptabiliteDao).deleteEcritureComptable(any(Integer.class));
-		
-		
-		vComptabiliteManager.deleteEcritureComptable(id);
-		
-}catch (TechnicalException te){
-			
-			
+			doThrow(TechnicalException.class).when(comptabiliteDao).deleteEcritureComptable(any(Integer.class));
+
+			vComptabiliteManager.deleteEcritureComptable(id);
+
+		} catch (TechnicalException te) {
+
 		}
 
 		verify(transactionManager, times(1)).rollbackMyERP(any(TransactionStatus.class));
 
 	}
-	
 
 	/*
 	 * 
@@ -331,6 +324,5 @@ public class ComptabiliteManagerImplIT {
 	 * }
 	 * 
 	 */
-
 
 }

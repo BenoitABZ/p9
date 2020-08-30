@@ -3,6 +3,7 @@ package com.dummy.myerp.business.impl.manager;
 import java.math.BigDecimal;
 
 
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.*;
-import org.springframework.transaction.TransactionStatus;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +35,7 @@ import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
-import com.dummy.myerp.technical.exception.TechnicalException;
+
 
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {

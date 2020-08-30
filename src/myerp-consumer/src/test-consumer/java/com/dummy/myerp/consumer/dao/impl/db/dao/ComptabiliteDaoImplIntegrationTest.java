@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Rollback(true)
 
-public class ComptabiliteDaoImplIT{
+public class ComptabiliteDaoImplIntegrationTest{
 
 @Autowired
 ComptabiliteDaoImpl comptabiliteDao; 
