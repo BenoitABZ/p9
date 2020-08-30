@@ -95,6 +95,7 @@
 	<!-- Build -->
 	<!-- =============================================================== -->
 	<build>
+	<!--
 		<plugins>
 		<plugin>
 				<groupId>org.jacoco</groupId>
@@ -144,7 +145,7 @@
 							<outputDirectory>${project.reporting.outputDirectory}/jacocoIt</outputDirectory>
 						</configuration>
 					</execution>
-					<!--
+					
 					<execution>
 						<id>merge-unit-and-integration</id>
 						<phase>post-integration-test</phase>
@@ -174,9 +175,11 @@
 							<outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory>
 						</configuration>
 					</execution>
-					-->
+					
 				</executions>
 			</plugin>
 		</plugins>
+		-->
 	</build>
+	
 </project>

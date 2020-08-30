@@ -197,7 +197,7 @@
 	<!-- Build -->
 	<!-- =============================================================== -->
 	<build>
-	<!--
+	
 		<plugins>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -209,26 +209,20 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<propertyName>surfireArgLine</propertyName>
-							<destFile>${project.build.directory}/jacoco.exec</destFile>
-						</configuration>
+	
 					</execution>
 					<execution>
 						<id>report-aggregate</id>
 						<phase>prepare-package</phase>
 						<goals>
-							<goal>report-aggregate</goal>
+							<goal>report</goal>
 						</goals>
-						<configuration>
-							<dataFile>${project.build.directory}/jacoco.exec</dataFile>
-							<outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-						</configuration>
+
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
-		-->
+<!--  
 		 	<plugins>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -249,7 +243,7 @@
 						<id>after-unit-test-execution</id>
 						<phase>prepare-package</phase>
 						<goals>
-							<goal>report-aggregate</goal>
+							<goal>report</goal>
 						</goals>
 						<configuration>
 							<dataFile>${project.build.directory}/jacoco-ut.exec</dataFile>
@@ -271,14 +265,13 @@
 						<id>after-integration-test-execution</id>
 						<phase>post-integration-test</phase>
 						<goals>
-							<goal>report-aggregate</goal>
+							<goal>report</goal>
 						</goals>
 						<configuration>
 							<dataFile>${project.build.directory}/jacoco/jacoco-it.exec</dataFile>
 							<outputDirectory>${project.reporting.outputDirectory}/jacocoIt</outputDirectory>
 						</configuration>
 					</execution>
-					<!--
 					<execution>
 						<id>merge-unit-and-integration</id>
 						<phase>post-integration-test</phase>
@@ -307,10 +300,10 @@
 							<dataFile>${project.build.directory}/jacoco/merged.exec</dataFile>
 							<outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory>
 						</configuration>
-					</execution>
-					-->
+					</execution>				
 				</executions>
 			</plugin>
 		</plugins>
+		-->
 	</build>
 </project>
