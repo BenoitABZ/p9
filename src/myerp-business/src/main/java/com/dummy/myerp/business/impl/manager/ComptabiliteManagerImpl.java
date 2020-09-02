@@ -10,10 +10,13 @@ import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.consumer.dao.impl.cache.JournalComptableDaoCache;
+import com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
@@ -27,6 +30,8 @@ import com.dummy.myerp.technical.exception.TechnicalException;
  * Comptabilite manager implementation.
  */
 public class ComptabiliteManagerImpl extends AbstractBusinessManager implements ComptabiliteManager {
+	
+	private static Logger logger = LoggerFactory.getLogger(ComptabiliteManagerImpl.class);
 
 	// ==================== Attributs ====================
 
@@ -154,6 +159,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 		// ===== Vérification des contraintes unitaires sur les attributs de l'écriture
 		Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
 		if (!vViolations.isEmpty()) {
+			for (ConstraintViolation<EcritureComptable> vViolation : vViolations) {
+				logger.info("message de la violation de contrainte: {}", vViolation.getMessage());
+			}
 			for (ConstraintViolation<EcritureComptable> vViolation : vViolations) {
 				throw new FunctionalException(
 						"L'écriture comptable ne respecte pas les règles de gestion: " + vViolation.getMessage());

@@ -2,9 +2,10 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import java.sql.Types;
 
-
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,6 +31,8 @@ import com.dummy.myerp.technical.exception.TechnicalException;
  * Implémentation de l'interface {@link ComptabiliteDao}
  */
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {
+
+	private static Logger logger = LoggerFactory.getLogger(ComptabiliteDaoImpl.class);
 
 	// ==================== Constructeurs ====================
 	/** Instance unique de la classe (design pattern Singleton) */
@@ -64,6 +67,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
 		CompteComptableRM vRM = new CompteComptableRM();
 		List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, vRM);
+		logger.info("SQL request: {}", SQLgetListCompteComptable);
 		return vList;
 	}
 
@@ -73,9 +77,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 	public void setSQLgetListJournalComptable(String pSQLgetListJournalComptable) {
 		SQLgetListJournalComptable = pSQLgetListJournalComptable;
 	}
-	
+
 	public String getString() {
-		
+
 		return SQLgetListJournalComptable;
 	}
 
@@ -84,6 +88,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
 		JournalComptableRM vRM = new JournalComptableRM();
 		List<JournalComptable> vList = vJdbcTemplate.query(SQLgetListJournalComptable, vRM);
+		logger.info("SQL request: {}", SQLgetListJournalComptable);
 		return vList;
 	}
 
@@ -102,10 +107,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		EcritureComptableRM vRM = new EcritureComptableRM();
 		List<EcritureComptable> vList = null;
 		try {
-		vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
-		System.out.println(vList.get(0).getLibelle());
-		}catch(NullPointerException npe) {
-			
+			vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
+			logger.info("SQL request: {}", SQLgetListEcritureComptable);
+		} catch (NullPointerException npe) {
+
 			System.out.println("problème");
 		}
 		return vList;
@@ -126,6 +131,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		EcritureComptableRM vRM = new EcritureComptableRM();
 		EcritureComptable vBean;
 		try {
+			logger.info("SQL request: {}", SQLgetEcritureComptable);
 			vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptable, vSqlParams, vRM);
 		} catch (EmptyResultDataAccessException vEx) {
 			throw new NotFoundException("EcritureComptable non trouvée : id=" + pId);
@@ -148,6 +154,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		EcritureComptableRM vRM = new EcritureComptableRM();
 		EcritureComptable vBean;
 		try {
+			logger.info("SQL request: {}", SQLgetEcritureComptableByRef);
 			vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptableByRef, vSqlParams, vRM);
 		} catch (EmptyResultDataAccessException vEx) {
 			throw new NotFoundException("EcritureComptable non trouvée : reference=" + pReference);
@@ -169,6 +176,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
 		LigneEcritureComptableRM vRM = new LigneEcritureComptableRM();
 		List<LigneEcritureComptable> vList = vJdbcTemplate.query(SQLloadListLigneEcriture, vSqlParams, vRM);
+		logger.info("SQL request: {}", SQLloadListLigneEcriture);
 		pEcritureComptable.getListLigneEcriture().clear();
 		pEcritureComptable.getListLigneEcriture().addAll(vList);
 	}
@@ -193,7 +201,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("libelle", pEcritureComptable.getLibelle());
 
 		try {
-
+			logger.info("SQL request: {}", SQLinsertEcritureComptable);
 			vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
 
 		} catch (DataAccessException vEx) {
@@ -238,6 +246,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 			vSqlParams.addValue("credit", vLigne.getCredit());
 
 			vJdbcTemplate.update(SQLinsertListLigneEcritureComptable, vSqlParams);
+			logger.info("SQL request: {}", SQLinsertListLigneEcritureComptable);
 
 		}
 	}
@@ -264,6 +273,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
 		try {
 
+			logger.info("SQL request: {}", SQLupdateEcritureComptable);
 			vJdbcTemplate.update(SQLupdateEcritureComptable, vSqlParams);
 
 		} catch (DataAccessException vEx) {
@@ -297,7 +307,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("id", pId);
 
 		try {
-
+			logger.info("SQL request: {}", SQLdeleteEcritureComptable);
 			vJdbcTemplate.update(SQLdeleteEcritureComptable, vSqlParams);
 
 		} catch (DataAccessException vEx) {
@@ -324,6 +334,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("ecriture_id", pEcritureId);
 		vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
+		logger.info("SQL request: {}", SQLdeleteListLigneEcritureComptable);
 	}
 
 	// ==================== SequenceEcritureComptable - INSERT ====================
@@ -347,6 +358,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("derniere_valeur", derniereValeur);
 		vSqlParams.addValue("journal_code", pSequenceEcritureComptable.getJournalComptable().getCode());
 		vJdbcTemplate.update(SQLinsertSequenceEcritureComptable, vSqlParams);
+		logger.info("SQL request: {}", SQLinsertSequenceEcritureComptable);
 	}
 
 	// ==================== SequenceEcritureComptable - GET ====================
@@ -369,6 +381,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
 		SequenceEcritureComptable sequenceEcritureComptable;
 		try {
+			logger.info("SQL request: {}", SQLgetSequenceEcritureComptable);
 			sequenceEcritureComptable = vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptable, vSqlParams, vRm);
 			return sequenceEcritureComptable;
 		} catch (EmptyResultDataAccessException vEx) {
@@ -398,6 +411,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("journal_code", pSequenceEcritureComptable.getJournalComptable().getCode());
 
 		vJdbcTemplate.update(SQLupdateSequenceEcritureComptable, vSqlParams);
+		logger.info("SQL request: {}", SQLupdateSequenceEcritureComptable);
 
 	}
 
