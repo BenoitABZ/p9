@@ -8,6 +8,7 @@ services:
 before_script:
   - docker-compose -f docker/dev/docker-compose.yml up -d
 script:
+  - cd src
   - mvn clean verify -Ptest-consumer, -Ptest-business
 after_script:
   - docker-compose -f docker/dev/docker-compose.yml down
