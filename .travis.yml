@@ -1,6 +1,7 @@
-dist: true 
+dist: trusty 
 language: java
-jdk: oraclejdk8
+jdk: 
+  - openjdk8
 sudo: false
 services:
   - docker
