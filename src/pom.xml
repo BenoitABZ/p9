@@ -60,7 +60,7 @@
 		<sonar.projectKey>BenoitABZ_p9-${project.groupId}:${project.artifactId}</sonar.projectKey>
 		<sonar.organization>benoitabz</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.login>3f5dd86b18ae78ef50b11315db5357302ff57788</sonar.login>
+		<sonar.login>2db2bc754f1b8a4ebb26460e66d3586384aa6142</sonar.login>
 	</properties>
 
 
@@ -451,6 +451,11 @@
 						<!-- Skips unit tests if the value of skip.unit.tests property is true -->
 						<includes>
 							<include>**/ComptabiliteManagerImplTest</include>
+							<include>**/CompteComptableTest</include>
+							<include>**/EcritureComptableTest</include>
+							<include>**/LigneEcritureComptableTest</include>
+							<include>**/SequenceEcritureComptableTest</include>
+							<include>**/JournalComptableTest</include>
 						</includes>
 						<excludes>
 							<exclude>**/ComptabiliteDaoImplIntegrationTest</exclude>
