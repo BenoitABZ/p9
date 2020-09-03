@@ -53,8 +53,6 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(value = "/com/dummy/myerp/business/bootstrapContext.xml")
-//@Transactional
-//@Rollback(true)
 public class ComptabiliteManagerImplIntegrationTest {
 
 	@Autowired
@@ -202,7 +200,6 @@ public class ComptabiliteManagerImplIntegrationTest {
 
 		when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
 
-		// doNothing().when(transactionManager).commitMyERP(any(TransactionStatus.class));
 		try {
 			doThrow(TechnicalException.class).when(comptabiliteDao).deleteEcritureComptable(any(Integer.class));
 
@@ -215,114 +212,5 @@ public class ComptabiliteManagerImplIntegrationTest {
 		verify(transactionManager, times(1)).rollbackMyERP(any(TransactionStatus.class));
 
 	}
-
-	/*
-	 * 
-	 * @Test public void
-	 * addReference_shouldAddReferenceEcritureComptable_OfEcritureComptable() throws
-	 * Exception {
-	 * 
-	 * 
-	 * vEcritureComptable.setReference(null);
-	 * 
-	 * vComptabiliteManager.addReference(vEcritureComptable);
-	 * 
-	 * assertThat(vEcritureComptable.getReference()).isEqualTo("VE-2016/00042");
-	 * 
-	 * }
-	 * 
-	 * @Test public void
-	 * addReference_shouldCreateSequenceEcritureComptable_OfEcritureComptable()
-	 * throws Exception {
-	 * 
-	 * 
-	 * 
-	 * vEcritureComptable.setReference(null); SequenceEcritureComptable
-	 * sequenceExpected = new SequenceEcritureComptable(2016,
-	 * vEcritureComptable.getJournal());
-	 * 
-	 * vComptabiliteManager.addReference(vEcritureComptable);
-	 * 
-	 * SequenceEcritureComptable sequenceActual =
-	 * comptabiliteDao.getSequenceEcritureComptable(2016,
-	 * vEcritureComptable.getJournal());
-	 * 
-	 * assertThat(sequenceActual.getDerniereValeur()).isEqualTo(52);
-	 * 
-	 * }
-	 * 
-	 * @Test public void
-	 * checkEcritureComptable_shouldThrowNothing_OfEcritureComptable() throws
-	 * Exception {
-	 * 
-	 * 
-	 * 
-	 * vComptabiliteManager.checkEcritureComptable(vEcritureComptable);
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * @Test public void
-	 * insertEcritureComptable_shouldInsertEcritureComptable_OfEcritureComptable()
-	 * throws Exception {
-	 * 
-	 * 
-	 * 
-	 * ComptabiliteManager vComptabiliteManager =
-	 * businessProxy.getComptabiliteManager();
-	 * 
-	 * List<EcritureComptable> listEcritureComptableBeforeInsertion =
-	 * vComptabiliteManager.getListEcritureComptable();
-	 * 
-	 * vComptabiliteManager.insertEcritureComptable(vEcritureComptable);
-	 * 
-	 * List<EcritureComptable> listEcritureComptableAfterInsertion =
-	 * vComptabiliteManager.getListEcritureComptable();
-	 * 
-	 * assertThat(listEcritureComptableAfterInsertion.size() -
-	 * 1).isEqualTo(listEcritureComptableBeforeInsertion.size());
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * @Test public void
-	 * updateEcritureComptable_shouldUpdateEcritureComptable_OfEcritureComptable()
-	 * throws Exception {
-	 * 
-	 * vEcritureComptable.setId(-3);
-	 * 
-	 * vComptabiliteManager.updateEcritureComptable(vEcritureComptable);
-	 * 
-	 * EcritureComptable ecritureComptableUpdated =
-	 * comptabiliteDao.getEcritureComptable(-3);
-	 * 
-	 * assertThat(ecritureComptableUpdated.toString()).isEqualTo(vEcritureComptable.
-	 * toString());
-	 * 
-	 * }
-	 * 
-	 * @Test public void
-	 * deleteEcritureComptable_shouldDeleteEcritureComptable_OfEcritureComptable()
-	 * throws Exception {
-	 * 
-	 * List<EcritureComptable> listEcritureComptableBeforeDelete =
-	 * vComptabiliteManager.getListEcritureComptable();
-	 * 
-	 * EcritureComptable ecritureComptableDeleted =
-	 * comptabiliteDao.getEcritureComptable(-3);
-	 * 
-	 * vComptabiliteManager.deleteEcritureComptable(ecritureComptableDeleted);
-	 * 
-	 * List<EcritureComptable> listEcritureComptableAfterDelete =
-	 * vComptabiliteManager.getListEcritureComptable();
-	 * 
-	 * assertThat(listEcritureComptableAfterDelete +
-	 * 1).isEqualTo(listEcritureComptableBeforeDelete);
-	 * 
-	 * }
-	 * 
-	 */
 
 }

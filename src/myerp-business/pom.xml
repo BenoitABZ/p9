@@ -83,6 +83,7 @@
 		</dependency>
 
 		<!-- ========== Test Dependencies ========== -->
+
 		<!-- ===== Tests ===== -->
 		<dependency>
 			<groupId>org.assertj</groupId>
@@ -111,12 +112,14 @@
 		</dependency>
 
 		<!-- ===== Database (pour les tests) ===== -->
+
 		<!-- Pool de connexion -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- Drivers JDBC PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -130,6 +133,7 @@
 	<!-- Profiles -->
 	<!-- =============================================================== -->
 	<profiles>
+
 		<!-- Profile utilisé pour lancer les tests d'intégration de la couche Business -->
 		<profile>
 			<id>test-business</id>
@@ -146,8 +150,8 @@
 									<goal>verify</goal>
 								</goals>
 								<configuration>
-							    <reuseForks>true</reuseForks>
-								<argLine>${itCoverageAgent}</argLine>	
+									<reuseForks>true</reuseForks>
+									<argLine>${itCoverageAgent}</argLine>
 									<includes>
 										<include>**/*IntegrationTest</include>
 									</includes>
@@ -155,6 +159,7 @@
 							</execution>
 						</executions>
 					</plugin>
+
 					<!-- Ajout du répertoire src/test-business/java en tant que source de 
 						test du module -->
 					<plugin>
@@ -193,113 +198,5 @@
 	<!-- Build -->
 	<!-- =============================================================== -->
 	<build>
-	<!--
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
-				<executions>
-					<execution>
-						<id>default-prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-	
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-  
-		 	<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
-				<executions>
-					<execution>
-						<id>prepare-agent-unit</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						<configuration>
-							<propertyName>surfireArgLine</propertyName>
-							<destFile>${project.build.directory}/jacoco-ut.exec</destFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>after-unit-test-execution</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<dataFile>${project.build.directory}/jacoco-ut.exec</dataFile>
-							<outputDirectory>${project.reporting.outputDirectory}/jacocoUt</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>prepare-agent-integration</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						<configuration>
-							<propertyName>failsafeArgLine</propertyName>
-							<destFile>${project.build.directory}/jacoco/jacocoIt.exec</destFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>after-integration-test-execution</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<dataFile>${project.build.directory}/jacoco/jacoco-it.exec</dataFile>
-							<outputDirectory>${project.reporting.outputDirectory}/jacocoIt</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>merge-unit-and-integration</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>merge</goal>
-						</goals>
-						<configuration>
-							<fileSets>
-								<fileSet>
-									<directory>${project.build.directory}/jacoco/</directory>
-									<includes>
-										<include>*.exec</include>
-									</includes>
-								</fileSet>
-							</fileSets>
-							<destFile>${project.build.directory}/jacoco/merged.exec</destFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-merged-report</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>merge</goal>
-						</goals>
-						<configuration>
-							<dataFile>${project.build.directory}/jacoco/merged.exec</dataFile>
-							<outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory>
-						</configuration>
-					</execution>				
-				</executions>
-			</plugin>
-		</plugins>
-		-->
 	</build>
 </project>

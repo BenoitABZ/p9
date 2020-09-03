@@ -232,9 +232,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	@Override
 	public void checkEcritureComptableUnitRG5_isJournalComptableExistingInDb(EcritureComptable pEcritureComptable)
 			throws FunctionalException {
-
-		
-
+	
 		try {
 
 			String code = pEcritureComptable.getJournal().getCode();

@@ -79,6 +79,7 @@
 	<!-- Profiles -->
 	<!-- =============================================================== -->
 	<profiles>
+
 		<!-- Profile utilisé par le plugin m2e d'Eclipse -->
 		<profile>
 			<id>m2e</id>
@@ -108,6 +109,7 @@
 	<!-- Repositories -->
 	<!-- =============================================================== -->
 	<repositories>
+
 		<!-- ===== Project local repository ===== -->
 		<repository>
 			<id>project.local</id>
@@ -125,6 +127,7 @@
 	<!-- =============================================================== -->
 	<dependencyManagement>
 		<dependencies>
+
 			<!-- ========== Modules ========== -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -147,7 +150,6 @@
 				<version>${project.version}</version>
 			</dependency>
 
-
 			<!-- ========== Libraries ========== -->
 			<!-- ===== Log4j ===== -->
 			<dependency>
@@ -160,12 +162,14 @@
 				<artifactId>log4j-core</artifactId>
 				<version>${log4j.version}</version>
 			</dependency>
+
 			<!-- Commons Logging Bridge -->
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-jcl</artifactId>
 				<version>${log4j.version}</version>
 			</dependency>
+
 			<!-- Log4j 2 SLF4J Binding -->
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
@@ -304,70 +308,72 @@
 	<!-- =============================================================== -->
 	<build>
 		<plugins>
-		          <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.5</version>
-                    <executions>
-                        <execution>
-                            <id>pre-unit-test</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>post-unit-test</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>pre-integration-test</id>
-                            <goals>
-                                <goal>prepare-agent-integration</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>post-integration-test</id>
-                            <goals>
-                                <goal>report-integration</goal>
-                            </goals>
-                            <configuration>
-                            <propertyName>itCoverageAgent</propertyName>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>merge-results</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>merge</goal>
-                            </goals>
-                            <configuration>
-                                <fileSets>
-                                    <fileSet>
-                                        <directory>${project.build.directory}</directory>
-                                        <includes>
-                                            <include>*.exec</include>
-                                        </includes>
-                                    </fileSet>
-                                </fileSets>
-                                <destFile>${project.build.directory}/aggregate.exec</destFile>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>post-merge-report</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <dataFile>${project.build.directory}/aggregate.exec</dataFile>
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+
+			<!-- ===== Jacoco ===== -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.5</version>
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>pre-integration-test</id>
+						<goals>
+							<goal>prepare-agent-integration</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-integration-test</id>
+						<goals>
+							<goal>report-integration</goal>
+						</goals>
+						<configuration>
+							<propertyName>itCoverageAgent</propertyName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>merge-results</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>merge</goal>
+						</goals>
+						<configuration>
+							<fileSets>
+								<fileSet>
+									<directory>${project.build.directory}</directory>
+									<includes>
+										<include>*.exec</include>
+									</includes>
+								</fileSet>
+							</fileSets>
+							<destFile>${project.build.directory}/aggregate.exec</destFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-merge-report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/aggregate.exec</dataFile>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<!-- =============================================================== -->
 		<!-- pluginManagement -->
@@ -439,16 +445,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.22.2</version>
-					
+
 					<configuration>
 						<forkMode>once</forkMode>
-
 						<forkCount>1</forkCount>
-
 						<reuseForks>true</reuseForks>
-						<!-- Sets the VM argument line used when unit tests are run. -->
-					
-						<!-- Skips unit tests if the value of skip.unit.tests property is true -->
 						<includes>
 							<include>**/ComptabiliteManagerImplTest</include>
 							<include>**/CompteComptableTest</include>
@@ -462,9 +463,7 @@
 							<exclude>**/ComptabiliteManagerImplIntegrationTest</exclude>
 						</excludes>
 					</configuration>
-
 				</plugin>
-
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-failsafe-plugin</artifactId>
@@ -521,10 +520,6 @@
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>1.10</version>
 				</plugin>
-
-				<!-- ===== Jacoco ===== -->
-
-
 			</plugins>
 		</pluginManagement>
 	</build>

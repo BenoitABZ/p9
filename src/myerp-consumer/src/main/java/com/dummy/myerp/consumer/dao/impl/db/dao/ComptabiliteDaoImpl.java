@@ -1,7 +1,6 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import java.sql.Types;
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -106,13 +105,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
 		EcritureComptableRM vRM = new EcritureComptableRM();
 		List<EcritureComptable> vList = null;
-		try {
-			vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
-			logger.info("SQL request: {}", SQLgetListEcritureComptable);
-		} catch (NullPointerException npe) {
 
-			System.out.println("problème");
-		}
+		vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
+		logger.info("SQL request: {}", SQLgetListEcritureComptable);
+
 		return vList;
 	}
 
@@ -199,7 +195,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("reference", pEcritureComptable.getReference());
 		vSqlParams.addValue("date", pEcritureComptable.getDate(), Types.DATE);
 		vSqlParams.addValue("libelle", pEcritureComptable.getLibelle());
-
 		try {
 			logger.info("SQL request: {}", SQLinsertEcritureComptable);
 			vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
@@ -242,9 +237,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 			vSqlParams.addValue("compte_comptable_numero", vLigne.getCompteComptable().getNumero());
 			vSqlParams.addValue("libelle", vLigne.getLibelle());
 			vSqlParams.addValue("debit", vLigne.getDebit());
-
 			vSqlParams.addValue("credit", vLigne.getCredit());
-
 			vJdbcTemplate.update(SQLinsertListLigneEcritureComptable, vSqlParams);
 			logger.info("SQL request: {}", SQLinsertListLigneEcritureComptable);
 
@@ -270,7 +263,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("reference", pEcritureComptable.getReference());
 		vSqlParams.addValue("date", pEcritureComptable.getDate(), Types.DATE);
 		vSqlParams.addValue("libelle", pEcritureComptable.getLibelle());
-
 		try {
 
 			logger.info("SQL request: {}", SQLupdateEcritureComptable);
@@ -305,7 +297,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("id", pId);
-
 		try {
 			logger.info("SQL request: {}", SQLdeleteEcritureComptable);
 			vJdbcTemplate.update(SQLdeleteEcritureComptable, vSqlParams);
@@ -348,11 +339,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
 	@Override
 	public void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable) {
-
 		int derniereValeur = 1;
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
-
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
 		vSqlParams.addValue("derniere_valeur", derniereValeur);
@@ -378,7 +367,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		SequenceEcritureComptableRm vRm = new SequenceEcritureComptableRm();
 		vSqlParams.addValue("annee", annee);
 		vSqlParams.addValue("journal_code", pJournalComptable.getCode());
-
 		SequenceEcritureComptable sequenceEcritureComptable;
 		try {
 			logger.info("SQL request: {}", SQLgetSequenceEcritureComptable);
@@ -401,7 +389,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
 	@Override
 	public void updateSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable) {
-
 		int derniereValeur = pSequenceEcritureComptable.getDerniereValeur() + 1;
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
@@ -409,7 +396,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("derniere_valeur", derniereValeur);
 		vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
 		vSqlParams.addValue("journal_code", pSequenceEcritureComptable.getJournalComptable().getCode());
-
 		vJdbcTemplate.update(SQLupdateSequenceEcritureComptable, vSqlParams);
 		logger.info("SQL request: {}", SQLupdateSequenceEcritureComptable);
 

@@ -46,17 +46,21 @@ public class EcritureComptableTest {
 		vEcriture.setDate(dateNow);
 
 		vEcriture.setLibelle("Equilibrée");
-		vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
-		vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
-		vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "201", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "100", "32.50"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301.50"));
 		vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+
+	}
+	@Test
+	public void isEquilibree_shouldBeTrue() {
+
+		assertTrue(vEcriture.isEquilibree());
 
 	}
 
 	@Test
-	public void isEquilibree() {
-
-		assertTrue(vEcriture.isEquilibree());
+	public void isEquilibree_shouldBeFalse() {
 
 		vEcriture.getListLigneEcriture().clear();
 		vEcriture.setLibelle("Non équilibrée");
@@ -64,6 +68,7 @@ public class EcritureComptableTest {
 		vEcriture.getListLigneEcriture().add(this.createLigne(1, "20", "1"));
 		vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "30"));
 		vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "6"));
+		
 		assertFalse(vEcriture.isEquilibree());
 	}
 
@@ -97,9 +102,9 @@ public class EcritureComptableTest {
 
 		assertThat(vEcriture.toString()).isEqualTo(
 				"EcritureComptable{id=-1, journal=JournalComptable{code='TE', libelle='Journal comptable test'}, reference='TE-2020/00001', date=" + vEcriture.getDate().toString() + ", libelle='Equilibrée', totalDebit=341.00, totalCredit=341.00, listLigneEcriture=[\n"
-						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='200.50', debit=200.50, credit=null}\n"
-						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='67.50', debit=100.50, credit=33}\n"
-						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='-301', debit=null, credit=301}\n"
+						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='201', debit=201, credit=null}\n"
+						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='67.50', debit=100, credit=32.50}\n"
+						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='-301.50', debit=null, credit=301.50}\n"
 						+ "LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='33', debit=40, credit=7}\n"
 						+ "]}"
 				);
