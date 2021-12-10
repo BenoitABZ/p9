@@ -52,7 +52,7 @@
 		<application.name>MyERP</application.name>
 
 		<!-- ===== Version properties ===== -->
-		<log4j.version>2.8.1</log4j.version>
+		<log4j.version>2.15.0</log4j.version>
 		<spring.version>5.2.7.RELEASE</spring.version>
 		<dep.junit.version>5.5.1</dep.junit.version>
 		<assertj.version>3.13.2</assertj.version>
